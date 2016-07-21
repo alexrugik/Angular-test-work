@@ -1,0 +1,57 @@
+{
+  "config": {
+    "title": "Skeleton",
+    "baseUrl": "/",
+    "apiUrl": "../jotform/yuii2/api"
+  },
+  "app": {
+    "module": [
+      "ct.ui.router.extras",
+      "ui.bootstrap",
+      "restmod",
+      "satellizer",
+      "toaster"
+    ],
+    "config": [
+      "config",
+      "routes"
+    ],
+    "run": [
+      "run"
+    ],
+    "validator": {},
+    "directive": {},
+    "provider": {},
+    "service": {
+      "Test": "TestService"
+    },
+    "factory": {},
+    "controller": {
+      "LoginCtrl": "login",
+      "HomeCtrl": "home",
+      "MapCtrl": "map"
+    },
+    "filter": {},
+    "model": {
+      "Base": "base",
+      "User": "user"
+    },
+    "custom": [
+    ]
+  },
+  "global": {
+    "$": "jquery",
+    "window.jQuery": "jquery",
+    "jQuery": "jquery"
+  },
+  "vendor": [
+    "jquery",
+    "angular",
+    "angular-ui-router",
+    "ui-router-extras",
+    "angular-ui-bootstrap",
+    "angular-restmod",
+    "satellizer",
+    "angularjs-toaster"
+  ]
+}

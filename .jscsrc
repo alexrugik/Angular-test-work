@@ -1,0 +1,6 @@
+{
+  "preset": "airbnb",
+  "requireTrailingComma": null,
+  "maximumLineLength": 120,
+  "safeContextKeyword": null
+}
