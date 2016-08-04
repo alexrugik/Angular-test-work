@@ -24,6 +24,7 @@
   "devDependencies": {},
   "dependencies": {
     "angular": "^1.4.9",
+    "angular-google-maps": "^2.3.3",
     "angular-restmod": "^1.1.11",
     "angular-ui-bootstrap": "^1.1.0",
     "angular-ui-router": "^0.2.15",

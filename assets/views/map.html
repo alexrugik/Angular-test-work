@@ -1,43 +1,63 @@
 <div class="container">
-  <hr>
-  <div class="row">
-    <!-- left column -->
-    <div class="col-md-3">
-      <div class="text-center">
-        <img src="//placehold.it/100" class="avatar img-circle" alt="avatar">
-      </div>
-    </div>
-
-    <!-- edit form column -->
-    <div class="col-md-9 personal-info">
-
-      <div class="form-group">
-        <h3 class="title">Personal info</h3>
-      </div>
-
-      <div class="form-horizontal" role="contentinfo">
-        <div class="form-group">
-          <label class="col-lg-3 control-label">First name:</label>
-          <div class="col-lg-8">
-            <h4>{{person.name}}</h4>
-          </div>
-        </div>
-        <div class="form-group">
-          <label class="col-lg-3 control-label">Last name:</label>
-          <div class="col-lg-8">
-            <h4>{{person.surName}}</h4>
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label class="col-lg-3 control-label">Gender:</label>
-          <div class="col-lg-8">
-            <div class="ui-select">
-              <h4>{{person.gender}}</h4>
+    <div class="row">
+        <!-- left column -->
+        <div class="col-md-3">
+            <div class="text-center" style="width:200px, height:100px">
+                <img ng-src="{{user.imageLink}}" class="avatar img-circle" alt="avatar">
             </div>
-          </div>
         </div>
-      </div>
+
+        <!-- edit form column -->
+        <div class="col-md-9 personal-info">
+
+            <div class="form-group">
+                <h3 class="title">Personal info</h3>
+            </div>
+
+            <div class="form-horizontal" role="contentinfo">
+                <div class="form-group">
+                    <label class="col-lg-3 control-label">First name:</label>
+                    <div class="col-lg-8">
+                        <h4>{{user.name}}</h4>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-lg-3 control-label">Last name:</label>
+                    <div class="col-lg-8">
+                        <h4>{{user.surName}}</h4>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-lg-3 control-label">Gender:</label>
+                    <div class="col-lg-8">
+                        <div class="ui-select">
+                            <h4>{{user.gender}}</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <uib-tabset active="activeJustified" justified="true">
+            <uib-tab index="0" heading="Justified">
+              <h3>Map</h3>
+              <div class=""> here is map             </div>
+            </uib-tab>
+            <uib-tab index="1" heading="SJ">
+              <h3>List with users</h3>
+              <ul ng-repeat="user in $ctr.users">
+                  <li>
+                      <a href="/map/{{user._id}}">{{user.name.first}} {{user.name.last}} </a>
+                      <p>age: {{user.age}}</p>
+                      <p>address: {{user.address}}</p>
+                  </li>
+              </ul>
+            </uib-tab>
+        </uib-tabset>
+    </div>
 </div>

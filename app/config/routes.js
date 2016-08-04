@@ -40,5 +40,11 @@ function routes(AppProvider, $stateProvider, $urlRouterProvider, $urlMatcherFact
         templateUrl: AppProvider.viewPath('home'),
         controller: 'HomeCtrl',
         controllerAs: '$ctr'
+      })
+      .state('user', {
+        url: '/map/:userId',
+        templateUrl: AppProvider.viewPath('user'),
+        controller: 'UserCtrl',
+        controllerAs: '$ctr'
       });
 }

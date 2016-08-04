@@ -20,7 +20,9 @@
       "run"
     ],
     "validator": {},
-    "directive": {},
+    "directive": {
+      "Tab": "tab"
+    },
     "provider": {},
     "service": {
       "Test": "TestService"
@@ -29,7 +31,8 @@
     "controller": {
       "LoginCtrl": "login",
       "HomeCtrl": "home",
-      "MapCtrl": "map"
+      "MapCtrl": "map",
+      "UserCtrl": "user"
     },
     "filter": {},
     "model": {
@@ -52,6 +55,7 @@
     "angular-ui-bootstrap",
     "angular-restmod",
     "satellizer",
-    "angularjs-toaster"
+    "angularjs-toaster",
+    "angular-google-maps"
   ]
 }

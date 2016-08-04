@@ -5,7 +5,7 @@ Login.$inject = ['$auth', '$state'];
 function Login($auth, $state) {
   console.log($auth);
   console.log($state);
-  if($auth.isAuthenticated()) {
+  if ($auth.isAuthenticated()) {
     $state.go("home");
   }
   var vm = this;

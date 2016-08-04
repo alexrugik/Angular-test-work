@@ -4,19 +4,21 @@ config.$inject = [
   'AppProvider',
   '$locationProvider',
   '$authProvider',
-  'restmodProvider'
+  'restmodProvider',
 ];
 
 function config(AppProvider, $locationProvider, $authProvider, $restmodProvider) {
   //--------- $locationProvider ----------------------------------------------
-  $locationProvider.html5Mode({ enabled: true }).hashPrefix('!');
+  $locationProvider.html5Mode({
+    enabled: true
+  }).hashPrefix('!');
 
   //--------- $authProvider --------------------------------------------------
   $authProvider.baseUrl = AppProvider.config.apiUrl;
   $authProvider.tokenRoot = 'result';
   $authProvider.loginUrl = 'users/login';
   $authProvider.facebook({
-   clientId: '1991845311041561'//"1637129439866047"//'1991845311041561'
+    clientId: '1991845311041561' //"1637129439866047"//'1991845311041561'
   });
 
 
@@ -31,8 +33,11 @@ function config(AppProvider, $locationProvider, $authProvider, $restmodProvider)
     scopeDelimiter: ',',
     display: 'popup',
     type: '2.0',
-    popupOptions: { width: 580, height: 400 }
-});
+    popupOptions: {
+      width: 580,
+      height: 400
+    }
+  });
 }
 
 /*module.exports = config;
