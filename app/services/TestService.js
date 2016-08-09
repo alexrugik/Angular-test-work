@@ -1,6 +1,9 @@
 module.exports = TestService;
 
+TestService.$inject = ['$state', '$auth'];
 
-function TestService() {
-    return {1: "hello"};
+function TestService($state, $auth) {
+  if (!$auth.isAuthenticated) {
+    $state.go("login");
+  }
 }

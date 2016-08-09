@@ -25,26 +25,26 @@ function routes(AppProvider, $stateProvider, $urlRouterProvider, $urlMatcherFact
         url: '/',
         templateUrl: AppProvider.viewPath('login'),
         controller: 'LoginCtrl',
-        controllerAs: ''
+        controllerAs: '$ctrl'
       })
 
       .state('map', {
         url: '/map',
         templateUrl: AppProvider.viewPath('map'),
         controller: 'MapCtrl',
-        controllerAs: '$ctr'
+        controllerAs: '$ctrl'
       })
 
       .state('home', {
         url: '/home',
         templateUrl: AppProvider.viewPath('home'),
         controller: 'HomeCtrl',
-        controllerAs: '$ctr'
+        controllerAs: '$ctrl'
       })
       .state('user', {
         url: '/map/:userId',
         templateUrl: AppProvider.viewPath('user'),
         controller: 'UserCtrl',
-        controllerAs: '$ctr'
+        controllerAs: '$ctrl'
       });
 }

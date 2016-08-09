@@ -2,10 +2,11 @@
   "config": {
     "title": "Skeleton",
     "baseUrl": "/",
-    "apiUrl": "../jotform/yuii2/api"
+    "apiUrl": "/api/"
   },
   "app": {
     "module": [
+      "ngMockE2E",
       "ct.ui.router.extras",
       "ui.bootstrap",
       "restmod",
@@ -17,11 +18,12 @@
       "routes"
     ],
     "run": [
-      "run"
+      "run",
+      "http-backend"
     ],
     "validator": {},
     "directive": {
-      "Tab": "tab"
+
     },
     "provider": {},
     "service": {
@@ -50,6 +52,7 @@
   "vendor": [
     "jquery",
     "angular",
+    "angular-mocks",
     "angular-ui-router",
     "ui-router-extras",
     "angular-ui-bootstrap",

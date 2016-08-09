@@ -7,7 +7,7 @@ config.$inject = [
   'restmodProvider',
 ];
 
-function config(AppProvider, $locationProvider, $authProvider, $restmodProvider) {
+function config(AppProvider, $locationProvider, $authProvider, restmodProvider) {
   //--------- $locationProvider ----------------------------------------------
   $locationProvider.html5Mode({
     enabled: true
@@ -38,8 +38,25 @@ function config(AppProvider, $locationProvider, $authProvider, $restmodProvider)
       height: 400
     }
   });
-}
 
+  restmodProvider
+      .rebase('DefaultPacker', 'Base', {
+        $extend: {
+          Model: {
+            encodeUrlName: function (_name) {
+              return _name.toLowerCase();
+            }
+          }
+        },
+        $config: {
+          style: 'GBKSOFT',
+          urlPrefix: AppProvider.config.apiUrl,
+          jsonRoot: 'result',
+          primaryKey: 'id',
+          jsonMeta: '_meta'
+        }
+      });
+}
 /*module.exports = config;
 
 config.$inject = [

@@ -5,7 +5,7 @@
       <!-- left column -->
       <div class="col-md-3">
         <div class="text-center">
-          <img ng-src="{{$ctr.user.imageLink}}" class="avatar img-circle" alt="avatar">
+          <img ng-src="{{$ctrl.user.image}}" class="avatar img-circle" alt="avatar">
           <h6>Upload a different photo...</h6>
           <input type="file" class="form-control">
         </div>
@@ -22,13 +22,20 @@
           <div class="form-group">
             <label class="col-lg-3 control-label">First name:</label>
             <div class="col-lg-8">
-              <input class="form-control" type="text" ng-model="$ctr.user.name" ng-value="$ctr.user.name">
+              <input class="form-control" type="text" ng-model="$ctrl.user.firstName">
             </div>
           </div>
           <div class="form-group">
             <label class="col-lg-3 control-label">Last name:</label>
             <div class="col-lg-8">
-              <input class="form-control" type="text" ng-model="$ctr.user.surName" ng-value="$ctr.user.changedSurName">
+              <input class="form-control" type="text" ng-model="$ctrl.user.lastName">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="col-lg-3 control-label">Email: </label>
+            <div class="col-lg-8">
+              <input class="form-control" type="text" ng-model="$ctrl.user.email">
             </div>
           </div>
 
@@ -36,7 +43,7 @@
             <label class="col-lg-3 control-label">Gender:</label>
             <div class="col-lg-8">
               <div class="ui-select">
-                <select id="gender" class="form-control" ng-model="$ctr.user.gender">
+                <select id="gender" class="form-control" ng-model="$ctrl.user.gender">
                     <option value="male" ng-selected="selected">Male</option>
                     <option value="female">Female</option>
                 </select>
@@ -47,7 +54,7 @@
           <div class="form-group">
             <label class="col-md-3 control-label"></label>
             <div class="col-md-8">
-              <input type="button" class="btn btn-primary" ng-click="$ctr.saveChanges()" value="Save Changes">
+              <input type="button" class="btn btn-primary" ng-click="$ctrl.saveChanges()" value="Save Changes">
               <span></span>
             </div>
           </div>
@@ -55,3 +62,9 @@
       </div>
   </div>
 </div>
+
+<ul>
+  <li ng-repeat="user in $ctrl.users">
+    <b ng-bind="user.email"></b>
+  </li>
+</ul>

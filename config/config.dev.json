@@ -1,6 +1,6 @@
 {
   "config": {
-    "apiUrl": "http://jotform.rav.gbksoft.net/yuii2/api/v1",
+    "apiUrl": "/api/",
     "baseUrl": "/"
   }
 }

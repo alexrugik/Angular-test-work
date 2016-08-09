@@ -3,18 +3,22 @@ module.exports = Login;
 Login.$inject = ['$auth', '$state'];
 
 function Login($auth, $state) {
-  console.log($auth);
-  console.log($state);
+  var $ctrl = this;
+
   if ($auth.isAuthenticated()) {
     $state.go("home");
   }
-  var vm = this;
 
-  vm.credentials = {
+  $ctrl.credentials = {
     email: '',
     password: ''
   };
-  vm.authenticate = authenticate;
+
+  $ctrl.authenticate = function () {
+    return $auth.login($ctrl.credentials).then(function () {
+      $state.go('home');
+    });
+  };
 
   var authScenarios = {
     /**
@@ -41,14 +45,10 @@ function Login($auth, $state) {
   var authScenarios = {
     facebook: function () {
       $auth.facebook
-      console.log("facebook");
-      console.log($auth);
     },
-
   };
 
   function authenticate(provider) {
     $auth.authenticate(provider)
   }
-
 }
