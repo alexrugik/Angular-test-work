@@ -1,3 +1,24 @@
+<style media="screen">
+    body,
+    html {
+        height: 100%;
+        width: 100%;
+    }
+
+    .angular-google-map-container {
+        height: 100%;
+        width: 100%;
+        position: absolute;
+    }
+
+    .middle {
+        display: table;
+        width: 50%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+</style>
+
 <div class="container">
     <div class="row">
         <!-- left column -->
@@ -46,7 +67,14 @@
         <uib-tabset active="activeJustified" justified="true">
             <uib-tab index="0" heading="Justified">
               <h3>Map</h3>
-              <div class=""> here is map             </div>
+              <ui-gmap-google-map center="$ctrl.map.center"
+                                  zoom="$ctrl.map.zoom"
+                                  options="$ctrl.map.options">
+                <ui-gmap-marker ng-repeat="marker in $ctrl.markers"
+                                coords="marker.coords"
+                                idkey="marker.id"
+                                options="marker.options"></ui-gmap-marker>
+              </ui-gmap-google-map>
             </uib-tab>
             <uib-tab index="1" heading="SJ">
               <h3>List with users</h3>

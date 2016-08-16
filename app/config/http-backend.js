@@ -12,7 +12,7 @@ function user(id) {
     first_name: 'John ' + id,
     last_name: 'Doe ' + id,
     age: 25 + id,
-    latlon: 11000 + id + "," + 12330 + id,
+    latlon: 50.5303885 + id + "," + 30.6046767 + id,
     gender: "male"
   };
 

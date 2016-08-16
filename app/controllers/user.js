@@ -6,12 +6,11 @@ function User(App, $auth, $state, $http, $rootScope, User) {
 
   var $ctrl = this;
 
-  if ($auth.isAuthenticated()) {
-    $ctrl.currentUser = User.$find(2);
-    console.log($ctrl.currentUser);
-  } else {
+  if (!$auth.isAuthenticated()) {
     $state.go('login');
   }
 
+  $ctrl.currentUser = User.$find(2);
+  console.log($ctrl.currentUser);
 
 }

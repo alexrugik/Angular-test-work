@@ -5,9 +5,10 @@ config.$inject = [
   '$locationProvider',
   '$authProvider',
   'restmodProvider',
+  'uiGmapGoogleMapApiProvider'
 ];
 
-function config(AppProvider, $locationProvider, $authProvider, restmodProvider) {
+function config(AppProvider, $locationProvider, $authProvider, restmodProvider, uiGmapGoogleMapApiProvider) {
   //--------- $locationProvider ----------------------------------------------
   $locationProvider.html5Mode({
     enabled: true
@@ -21,8 +22,12 @@ function config(AppProvider, $locationProvider, $authProvider, restmodProvider) 
     clientId: '1991845311041561' //"1637129439866047"//'1991845311041561'
   });
 
+  uiGmapGoogleMapApiProvider.configure({
+    key: 'AIzaSyCJJbjNdOwkVDHmp6Nyr-AK_Q5G8yEFEvc',
+    //v: '3.20', //defaults to latest 3.X anyhow
+    libraries: 'weather,geometry,visualization'
+  });
 
-  //
   $authProvider.facebook({
     name: 'facebook',
     url: 'login-web',

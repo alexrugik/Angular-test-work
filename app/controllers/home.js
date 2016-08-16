@@ -3,20 +3,19 @@ module.exports = Home;
 Home.$inject = ['App', '$auth', '$state', '$http', 'Test', '$rootScope', 'User'];
 
 function Home(App, $auth, $state, $http, Test, $rootScope, User) {
-    var $ctrl = this;
-    $ctrl.user = {};
+  var $ctrl = this;
+  $ctrl.user = {};
 
-    if ($auth.isAuthenticated()) {
-      $ctrl.user = App.user;
-      
-      $ctrl.saveChanges = function() {
-        User.$new($ctrl.user.id).$extend($ctrl.user).$save().$then(function () {
-          $ctrl.user.$extend(this);
-          $state.go('map');
-        });
-      }
+  if (!$auth.isAuthenticated()) {
+    $state.go('login');
+  }
 
-    } else {
-      $state.go('login');
-    }
+  $ctrl.user = App.user;
+
+  $ctrl.saveChanges = function() {
+    User.$new($ctrl.user.id).$extend($ctrl.user).$save().$then(function() {
+      $ctrl.user.$extend(this);
+      $state.go('map');
+    });
+  }
 }

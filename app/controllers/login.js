@@ -14,8 +14,8 @@ function Login($auth, $state) {
     password: ''
   };
 
-  $ctrl.authenticate = function () {
-    return $auth.login($ctrl.credentials).then(function () {
+  $ctrl.authenticate = function() {
+    return $auth.login($ctrl.credentials).then(function() {
       $state.go('home');
     });
   };
@@ -28,11 +28,11 @@ function Login($auth, $state) {
     /**
      * Google Plus authenticate
      */
-    google: function () {},
+    google: function() {},
     /**
      * Facebook authenticate
      */
-    facebook: function () {
+    facebook: function() {
       console.log("facebook");
       console.log($auth);
       $auth.facebook
@@ -40,10 +40,10 @@ function Login($auth, $state) {
     /**
      * Twitter authenticate
      */
-    twitter: function () {}
+    twitter: function() {}
   };
   var authScenarios = {
-    facebook: function () {
+    facebook: function() {
       $auth.facebook
     },
   };
