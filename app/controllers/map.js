@@ -26,35 +26,40 @@ function Map(App, $auth, $state, $http, $rootScope, User, uiGmapGoogleMapApi, $t
         latitude: 50.4303885,
         longitude: 30.5046767
       },
-      options: {
-        draggable: true
-      },
       show: false,
       options: {
         animation: 1,
+        draggable: true
+      },
+      icon: {
+        url: this.image,
+        scaledSize: {
+          width: 34,
+          height: 44
+        },
       }
     });
 
     $ctrl.markers.push($ctrl.currentUserMarker);
   });
 
-/*  $timeout(() => {
-    $ctrl.markers.push({
-      id: 1111,
-      coords: {
-        latitude: 50.5303885,
-        longitude: 30.6046767
-      },
-      options: {
-        draggable: true
-      },
-      show: false,
-      options: {
-        animation: 2,
-      }
-    });
-  }, 2000);
-*/
+  /*  $timeout(() => {
+      $ctrl.markers.push({
+        id: 1111,
+        coords: {
+          latitude: 50.5303885,
+          longitude: 30.6046767
+        },
+        options: {
+          draggable: true
+        },
+        show: false,
+        options: {
+          animation: 2,
+        }
+      });
+    }, 2000);
+  */
   $ctrl.users.$then(function() {
     this.forEach(user => {
       let coords = user.latlon.split(',');
@@ -67,11 +72,16 @@ function Map(App, $auth, $state, $http, $rootScope, User, uiGmapGoogleMapApi, $t
           longitude: longitude
         },
         options: {
-          draggable: true
+          draggable: true,
+          animation: 2,
         },
         show: false,
-        options: {
-          animation: 2,
+        icon: {
+          url: user.image,
+          scaledSize: {
+            width: 34,
+            height: 44
+          }
         }
       });
     });

@@ -8,12 +8,12 @@ function user(id) {
   var user = {
     id: +id,
     email: 'jonh.doe.' + id + '@example.com',
-    name: 'John Doe',
     first_name: 'John ' + id,
     last_name: 'Doe ' + id,
     age: 25 + id,
     latlon: 50.5303885 + id + "," + 30.6046767 + id,
-    gender: "male"
+    gender: 'male',
+    image: '../img/avatar.jpg',
   };
 
   Object.defineProperty(user, 'withProfile', {
@@ -120,7 +120,7 @@ function HttpBackend($httpBackend) {
         code: 200,
         result: {
           id: params.id,
-          email: 'Hello@Hello.com'
+          email: params.email
         }
       }];
     });

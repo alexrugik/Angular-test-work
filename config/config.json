@@ -25,7 +25,7 @@
     ],
     "validator": {},
     "directive": {
-
+      "navbar" : "navbar/navbar"
     },
     "provider": {},
     "service": {
