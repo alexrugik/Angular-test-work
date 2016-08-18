@@ -44,6 +44,24 @@ function AppProvider() {
       }
     });
 
+/*    Object.defineProperties(app, {
+      config: {
+        get: function() {
+          return provider.config;
+        }
+      },
+      user: {
+        get: function() {
+          return user;
+        },
+        set: function(_user) {
+          user = _user;
+        }
+      }
+
+    });*/
+
+
     /**
      * Check user access
      *

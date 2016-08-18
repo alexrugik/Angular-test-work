@@ -1,21 +1,23 @@
 module.exports = Home;
 
-Home.$inject = ['App', '$auth', '$state', '$http', 'Test', '$rootScope', 'User'];
+Home.$inject = ['App', '$auth', '$state', '$http', 'Test', 'User'];
 
-function Home(App, $auth, $state, $http, Test, $rootScope, User) {
+function Home(App, $auth, $state, $http, Test, User) {
   var $ctrl = this;
-  $ctrl.user = {};
+  let url = 'http://test-api.live.gbksoft.net/api/v1/profile?token=' + $auth.getToken();
 
-  checkAuth();
-
-  $ctrl.user = App.user;
+  initPage();
 
   $ctrl.saveChanges = function() {
-    User.$new($ctrl.user.id).$extend($ctrl.user).$save().$then(function() {
-      $ctrl.user.$extend(this);
-      $state.go('map');
-    });
+    updateUser();
   }
+
+  function initPage() {
+    checkAuth();
+    $ctrl.user = {};
+    getUser();
+  }
+
 
   function checkAuth() {
     if (!$auth.isAuthenticated()) {
@@ -28,5 +30,25 @@ function Home(App, $auth, $state, $http, Test, $rootScope, User) {
       }
     }
   }
+
+  function getUser() {
+    $http.get(url)
+      .then(function(response) {
+        $ctrl.user = angular.fromJson(response.data.result);
+        console.log($ctrl.user);
+      })
+  }
+
+  function updateUser() {
+    $http.post(url, $ctrl.user)
+      .then(function(result) {
+        if (result.status == 200) {
+          $state.go('map');
+        } else {
+          alert('Can not save data!');
+        }
+      })
+  }
+
 
 }

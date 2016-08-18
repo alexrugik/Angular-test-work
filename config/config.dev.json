@@ -1,6 +1,6 @@
 {
   "config": {
-    "apiUrl": "/api/",
+    "apiUrl": "http://test-api.live.gbksoft.net/api/v1/",
     "baseUrl": "/"
   }
 }

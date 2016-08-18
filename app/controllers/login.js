@@ -17,31 +17,16 @@ function Login($auth, $state) {
   };
 
   $ctrl.authenticate = function() {
-    return $auth.login($ctrl.credentials).then(function() {
+    $auth.authenticate('facebook').then(function(res) {
+      return $auth.login({
+        fb_token: $auth.getToken()
+      });
+    }).then(function(res) {
+      $auth.setToken(res.data.message);
       $state.go('home');
     });
   };
 
-  var authScenarios = {
-    /**
-     * Internal authenticate
-     */
-
-    /**
-     * Google Plus authenticate
-     */
-    google: function() {},
-    /**
-     * Facebook authenticate
-     */
-    facebook: function() {
-      $auth.facebook
-    },
-    /**
-     * Twitter authenticate
-     */
-    twitter: function() {}
-  };
   var authScenarios = {
     facebook: function() {
       $auth.facebook
