@@ -5,19 +5,13 @@ Map.$inject = ['App', '$auth', '$state', '$http', '$rootScope', 'User', 'uiGmapG
 function Map(App, $auth, $state, $http, $rootScope, User, uiGmapGoogleMapApi, $timeout) {
   var $ctrl = this;
 
-  console.log($state);
-
-  if (!$auth.isAuthenticated()) {
-    $state.go('login');
-    return;
-  }
+  checkAuth();
 
   $ctrl.markers = [];
   $ctrl.user = App.user;
   $ctrl.currentUserMarker = {};
-  console.log("user = ", $ctrl.user);
   $ctrl.users = User.$search();
-  console.log("users = ", $ctrl.users);
+
 
   $ctrl.user.$then(function() {
     angular.extend($ctrl.currentUserMarker, {
@@ -29,7 +23,8 @@ function Map(App, $auth, $state, $http, $rootScope, User, uiGmapGoogleMapApi, $t
       show: false,
       options: {
         animation: 1,
-        draggable: true
+        draggable: true,
+        labelContent: this.firstName,
       },
       icon: {
         url: this.image,
@@ -37,29 +32,13 @@ function Map(App, $auth, $state, $http, $rootScope, User, uiGmapGoogleMapApi, $t
           width: 34,
           height: 44
         },
-      }
+      },
+      click: handleClickForUser
     });
 
     $ctrl.markers.push($ctrl.currentUserMarker);
   });
 
-  /*  $timeout(() => {
-      $ctrl.markers.push({
-        id: 1111,
-        coords: {
-          latitude: 50.5303885,
-          longitude: 30.6046767
-        },
-        options: {
-          draggable: true
-        },
-        show: false,
-        options: {
-          animation: 2,
-        }
-      });
-    }, 2000);
-  */
   $ctrl.users.$then(function() {
     this.forEach(user => {
       let coords = user.latlon.split(',');
@@ -74,18 +53,20 @@ function Map(App, $auth, $state, $http, $rootScope, User, uiGmapGoogleMapApi, $t
         options: {
           draggable: true,
           animation: 2,
+          labelClass: 'img-circle',
+          labelContent: user.first_name
         },
         show: false,
         icon: {
           url: user.image,
           scaledSize: {
-            width: 34,
-            height: 44
+            width: 24,
+            height: 24
           }
-        }
+        },
+        click: handleClickForUsers,
       });
     });
-
   });
 
   $ctrl.map = {
@@ -104,12 +85,11 @@ function Map(App, $auth, $state, $http, $rootScope, User, uiGmapGoogleMapApi, $t
       draggable: true,
       panControl: false,
       optimized: true,
-      mapTypeI: "roadmap",
+      mapTypeI: 'roadmap',
     },
   };
 
   uiGmapGoogleMapApi.then(function(maps) {
-    console.log("callback api google");
 
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(function(position) {
@@ -128,5 +108,26 @@ function Map(App, $auth, $state, $http, $rootScope, User, uiGmapGoogleMapApi, $t
     }
   });
 
+  function checkAuth() {
+    if (!$auth.isAuthenticated()) {
+      $state.go('login');
+    } else {
+      $ctrl.loginText = 'Logout';
+      $ctrl.logout = function() {
+        $state.go('login');
+        return $auth.logout().then(function() {})
+      }
+    }
+  }
+
+  function handleClickForUser() {
+    $state.go('home');
+  }
+
+  function handleClickForUsers(e) {
+    $state.go('user', {
+      userId: e.key
+    });
+  }
 
 }

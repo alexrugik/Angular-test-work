@@ -6,7 +6,9 @@ function Login($auth, $state) {
   var $ctrl = this;
 
   if ($auth.isAuthenticated()) {
-    $state.go("home");
+    $state.go('home');
+  } else {
+    $ctrl.loginText = 'Login please';
   }
 
   $ctrl.credentials = {
@@ -33,8 +35,6 @@ function Login($auth, $state) {
      * Facebook authenticate
      */
     facebook: function() {
-      console.log("facebook");
-      console.log($auth);
       $auth.facebook
     },
     /**

@@ -1,3 +1,4 @@
+
 <nav class="navbar navbar-default" role="navigation">
     <div class="navbar-header">
         <a class="navbar-brand" ng-href="home">
@@ -9,9 +10,9 @@
             <span>Map page </span>
         </a>
     </div>
-    <div class="navbar-header">
-        <a class="navbar-brand" ng-href="login">
-            <span>Logout</span>
+    <div ng-click='$ctrl.logout()' class="navbar-header">
+        <a class="navbar-brand" ng-href="#">
+            <span>{{$ctrl.loginText}}</span>
         </a>
     </div>
 </nav>

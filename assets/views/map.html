@@ -24,14 +24,14 @@
 <div class="container">
     <div class="row">
         <!-- left column -->
-        <div class="col-md-6 col-lg-6">
+        <div class="col-md-6 col-lg-6 col-sm-6">
             <div class="text-center" style="width:150px, height:100px">
-                <img ng-src="{{$ctrl.user.image}}" class="avatar img-circle" alt="avatar">
+                <img ng-src="{{$ctrl.user.image}}" class="avatar img-circle img-responsive" alt="avatar">
             </div>
         </div>
 
         <!-- edit form column -->
-        <div class="col-md-6 col-lg-6 personal-info">
+        <div class="col-md-6 col-lg-6 col-sm-6 personal-info">
 
             <div class="form-group">
                 <h3 class="title">Personal info</h3>
@@ -76,13 +76,16 @@
                                 coords="marker.coords"
                                 idkey="marker.id"
                                 icon="marker.icon"
-                                ng-class="user-marker"
+                                click="marker.click"
                                 options="marker.options"></ui-gmap-marker>
               </ui-gmap-google-map>
             </uib-tab>
             <uib-tab index="1" heading="SJ">
+              <div class="">
+                <label style="margin-top:10px">Find some friends: <input ng-model="searchText"></label>
+              </div>
               <h3>List with users</h3>
-              <ul ng-repeat="user in $ctrl.users">
+              <ul ng-repeat="user in $ctrl.users | filter:searchText">
                   <li class="col-md-3 col-lg-3 col-sm-6">
                       <a href="/map/{{user.id}}">{{user.first_name + user.last_name}}</a>
                       <p>age: {{user.age}}</p>

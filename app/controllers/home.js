@@ -6,9 +6,7 @@ function Home(App, $auth, $state, $http, Test, $rootScope, User) {
   var $ctrl = this;
   $ctrl.user = {};
 
-  if (!$auth.isAuthenticated()) {
-    $state.go('login');
-  }
+  checkAuth();
 
   $ctrl.user = App.user;
 
@@ -18,4 +16,17 @@ function Home(App, $auth, $state, $http, Test, $rootScope, User) {
       $state.go('map');
     });
   }
+
+  function checkAuth() {
+    if (!$auth.isAuthenticated()) {
+      $state.go('login');
+    } else {
+      $ctrl.loginText = 'Logout';
+      $ctrl.logout = function() {
+        $state.go('login');
+        return $auth.logout().then(function() {})
+      }
+    }
+  }
+
 }

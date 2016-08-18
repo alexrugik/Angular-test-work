@@ -19,7 +19,7 @@ function config(AppProvider, $locationProvider, $authProvider, restmodProvider, 
   $authProvider.tokenRoot = 'result';
   $authProvider.loginUrl = 'users/login';
   $authProvider.facebook({
-    clientId: '1991845311041561' //"1637129439866047"//'1991845311041561'
+    clientId: '1991845311041561'
   });
 
   uiGmapGoogleMapApiProvider.configure({
