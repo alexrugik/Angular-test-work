@@ -10,7 +10,28 @@ function Home(App, $auth, $state, $http, Test, User) {
 
   $ctrl.saveChanges = function() {
     updateUser();
+    $state.go('map');
   }
+
+  $ctrl.getAvatar = function() {
+    let file = document.getElementById('foto').files;
+    if (file[0] && !file[0].type === 'image/jpeg') {
+      alert('Is not correct avatar format! Please use image/jpeg');
+      return;
+    }
+    UpdateUserImage(file);
+  }
+
+/*  function previewFile(file) { 
+    let reader  = new FileReader();
+    reader.addEventListener("load", function(e) {  
+      $ctrl.user.image = e.target.result;
+      UpdateUserImage()
+    }, false); 
+    if (file) {  
+      reader.readAsDataURL(file); 
+    }
+  }*/
 
   function initPage() {
     checkAuth();
@@ -42,9 +63,25 @@ function Home(App, $auth, $state, $http, Test, User) {
   function updateUser() {
     $http.post(url, $ctrl.user)
       .then(function(result) {
-        if (result.status == 200) {
-          $state.go('map');
-        } else {
+        if (result.status == 200) {} else {
+          alert('Can not save data!');
+        }
+      })
+  }
+
+  function UpdateUserImage(files) {
+    let fd = new FormData();
+    console.log(fd);
+    fd.append("image", files[0]);
+    $http.post(url, fd, {
+        withCredentials: true,
+        headers: {
+          'Content-Type': undefined
+        },
+        transformRequest: angular.identity
+      })
+      .then(function(result) {
+        if (result.status == 200) {} else {
           alert('Can not save data!');
         }
       })

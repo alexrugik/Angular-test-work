@@ -4,10 +4,15 @@ User.$inject = ['App', '$auth', '$state', '$http', 'User'];
 
 function User(App, $auth, $state, $http, User) {
   var $ctrl = this;
+  const url = 'http://test-api.live.gbksoft.net/api/v1/';
 
-  checkAuth();
+  initPage();
 
-  $ctrl.currentUser = User.$find($state.params.userId);
+  function initPage() {
+    checkAuth();
+    $ctrl.currentUser = {};
+    getCurrentUser($state.params.userId);
+  }
 
   function checkAuth() {
     if (!$auth.isAuthenticated()) {
@@ -19,6 +24,14 @@ function User(App, $auth, $state, $http, User) {
         return $auth.logout().then(function() {})
       }
     }
+  }
+
+  function getCurrentUser(id) {
+    let localUrl = url + 'users/' +  $state.params.userId + '?token=' + $auth.getToken();
+    return $http.get(localUrl)
+      .then(function(response) {
+        $ctrl.currentUser = angular.fromJson(response.data.result);
+      })
   }
 
 }
