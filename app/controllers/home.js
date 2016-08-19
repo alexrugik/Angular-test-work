@@ -19,7 +19,7 @@ function Home(App, $auth, $state, $http, Test, User) {
       alert('Is not correct avatar format or no image! Please use image/jpeg');
       return;
     }
-    UpdateUserImage(file);
+    updateUserImage(file);
   }
 
   function initPage() {
@@ -64,7 +64,7 @@ function Home(App, $auth, $state, $http, Test, User) {
       })
   }
 
-  function UpdateUserImage(files) {
+  function updateUserImage(files) {
     let userUrl = url + 'profile?token=' + $auth.getToken();
     let fd = new FormData();
     fd.append("image", files[0]);
@@ -81,17 +81,6 @@ function Home(App, $auth, $state, $http, Test, User) {
           return;
         }
       })
-  }
-
-  let User = {
-    userUrl: url + 'profile?token=' + $auth.getToken(),
-
-    getUser: getUser,
-
-    updateUser: updateUser,
-
-    UpdateUserImage: UpdateUserImage,
-
   }
 
 }

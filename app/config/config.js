@@ -15,11 +15,10 @@ function config(AppProvider, $locationProvider, $authProvider, restmodProvider, 
   }).hashPrefix('!');
 
   //--------- $authProvider --------------------------------------------------
-  console.log(AppProvider.config.apiUrl);
   $authProvider.baseUrl = AppProvider.config.apiUrl;
   $authProvider.tokenRoot = 'result';
   $authProvider.loginUrl = 'login';
-  
+
   $authProvider.facebook({
     clientId: '1991845311041561',
     responseType: 'token'

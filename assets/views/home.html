@@ -1,74 +1,57 @@
 <navbar/>
 <div class="container">
     <h1>Edit Profile</h1>
-  	<hr>
-	<div class="row">
-      <!-- left column -->
-      <div class="col-md-3 col-lg-3 col-sm-6">
-        <div class="text-center">
-          <img ng-src="{{$ctrl.user.image}}" class="avatar img-circle img-responsive" alt="avatar">
-          <label class="btn btn-default btn-file">
-            <h6>Put a different photo...</h6>
-            <input id="foto" type="file" style="display: none;">
-          </label>
-          <button ng-click="$ctrl.getAvatar()" class="btn-primary">Upload foto</button>
-        </div>
-      </div>
-
-      <!-- edit form column -->
-      <div class="col-md-6 col-lg-6 col-sm-6 personal-info">
-
-        <div class="form-group">
-            <h3 class="title">Personal info</h3>
+    <hr>
+    <div class="row">
+        <!-- left column -->
+        <div class="col-md-3 col-lg-3 col-sm-6">
+            <div class="text-center">
+                <img ng-src="{{$ctrl.user.image}}" class="avatar img-circle img-responsive" alt="avatar">
+                <label class="btn btn-default btn-file">
+                    <h6>Put a different photo...</h6>
+                    <input id="foto" type="file" style="display: none;">
+                </label>
+                <button ng-click="$ctrl.getAvatar()" class="btn-primary">Upload foto</button>
+            </div>
         </div>
 
-        <form class="form-horizontal" role="form">
-          <div class="form-group">
-            <label class="col-lg-3 control-label">First name:</label>
-            <div class="col-lg-8">
-              <input class="form-control" type="text" ng-model="$ctrl.user.first_name">
-            </div>
-          </div>
-          <div class="form-group">
-            <label class="col-lg-3 control-label">Last name:</label>
-            <div class="col-lg-8">
-              <input class="form-control" type="text" ng-model="$ctrl.user.last_name">
-            </div>
-          </div>
+        <!-- edit form column -->
+        <div class="col-sm-6">
+            <!-- FORM ============ -->
+            <form name="userForm" ng-submit="submitForm()" novalidate>
 
-          <div class="form-group">
-            <label class="col-lg-3 control-label">Email: </label>
-            <div class="col-lg-8">
-              <input class="form-control" type="text" ng-model="$ctrl.user.email">
-            </div>
-          </div>
+                <!-- NAME -->
+                <div class="form-group" ng-class="{ 'has-error' : userForm.name.$invalid && !userForm.name.$pristine }">
+                    <label>Name</label>
+                    <input type="text" name="name" class="form-control" ng-model="$ctrl.user.first_name" ng-minlength="3" ng-maxlength="15">
+                    <p ng-show="userForm.username.$error.minlength" class="help-block">Username is too short.</p>
+                    <p ng-show="userForm.username.$error.maxlength" class="help-block">Username is too long.</p>
+                </div>
 
-          <div class="form-group">
-            <label class="col-lg-3 control-label">Gender:</label>
-            <div class="col-lg-8">
-              <div class="ui-select">
-                <select id="gender" class="form-control" ng-model="$ctrl.user.gender">
-                    <option value="male" ng-selected="selected">Male</option>
-                    <option value="female">Female</option>
-                </select>
-              </div>
-            </div>
-          </div>
+                <!-- USERNAME -->
+                <div class="form-group" ng-class="{ 'has-error' : userForm.username.$invalid && !userForm.username.$pristine }">
+                    <label>SurName</label>
+                    <input type="text" name="username" class="form-control" ng-model="$ctrl.user.last_name" ng-minlength="3" ng-maxlength="15">
+                    <p ng-show="userForm.username.$error.minlength" class="help-block">Username is too short.</p>
+                    <p ng-show="userForm.username.$error.maxlength" class="help-block">Username is too long.</p>
+                </div>
 
-          <div class="form-group">
-            <label class="col-md-3 control-label"></label>
-            <div class="col-md-8">
-              <input type="button" class="btn btn-primary" ng-click="$ctrl.saveChanges()" value="Save Changes">
-              <span></span>
-            </div>
-          </div>
-        </form>
-      </div>
-  </div>
+                <!-- EMAIL -->
+                <div class="form-group" ng-class="{ 'has-error' : userForm.email.$invalid && !userForm.email.$pristine }">
+                    <label>Email</label>
+                    <input type="email" name="email" class="form-control" ng-model="$ctrl.user.email">
+                    <p ng-show="userForm.email.$invalid && !userForm.email.$pristine" class="help-block">Enter a valid email.</p>
+                </div>
+
+                <button ng-click="$ctrl.saveChanges()" type="submit" class="btn btn-primary" ng-disabled="userForm.$invalid">Update profile</button>
+
+            </form>
+        </div>
+    </div>
 </div>
 
 <ul>
-  <li ng-repeat="user in $ctrl.users">
-    <b ng-bind="user.email"></b>
-  </li>
+    <li ng-repeat="user in $ctrl.users">
+        <b ng-bind="user.email"></b>
+    </li>
 </ul>
