@@ -24,14 +24,14 @@
 <div class="container">
     <div class="row">
         <!-- left column -->
-        <div class="col-md-6 col-lg-6 col-sm-6">
+        <div class="col-md-3 col-lg-3 col-sm-3 col-xs-3">
             <div class="text-center" style="width:150px, height:100px">
                 <img ng-src="{{$ctrl.user.image}}" class="avatar img-circle img-responsive" alt="avatar">
             </div>
         </div>
 
         <!-- edit form column -->
-        <div class="col-md-6 col-lg-6 col-sm-6 personal-info">
+        <div class="col-md-6 col-lg-6 col-sm-6 col-xs-12 personal-info">
 
             <div class="form-group">
                 <h3 class="title">Personal info</h3>
@@ -67,11 +67,11 @@
 <div class="container">
     <div class="row">
         <uib-tabset active="activeJustified" justified="true">
-            <uib-tab index="0" heading="Justified">
+            <uib-tab index="0" heading="MAP view">
               <h3>Map</h3>
               <ui-gmap-google-map center="$ctrl.map.center"
-                                  zoom="$ctrl.map.zoom"
-                                  options="$ctrl.map.options">
+                                zoom="$ctrl.map.zoom"
+                                options="$ctrl.map.options">
                 <ui-gmap-marker ng-repeat="marker in $ctrl.markers"
                                 coords="marker.coords"
                                 idkey="marker.id"
@@ -80,13 +80,13 @@
                                 options="marker.options"></ui-gmap-marker>
               </ui-gmap-google-map>
             </uib-tab>
-            <uib-tab index="1" heading="SJ">
+            <uib-tab index="1" heading="User view">
               <div class="">
                 <label style="margin-top:10px">Find some friends: <input ng-model="searchText"></label>
               </div>
               <h3>List with users</h3>
-              <ul ng-repeat="user in $ctrl.users">
-                  <li class="col-md-3 col-lg-3 col-sm-6">
+              <ul ng-repeat="user in $ctrl.filterUsers | filter: searchText">
+                  <li class="col-md-4 col-lg-4 col-sm-6">
                       <a href="/map/{{user.id}}">{{user.first_name + user.last_name}}</a>
                       <p>email: {{user.email}}</p>
                       <p>gender: {{user.gender}}</p>

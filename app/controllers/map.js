@@ -66,7 +66,6 @@ function Map(App, $auth, $state, $http, $rootScope, User, uiGmapGoogleMapApi, $t
     }
 
     $ctrl.user.then(function() {
-      console.log("user in then = ", $ctrl.user);
       angular.extend($ctrl.currentUserMarker, {
         id: $ctrl.user.id,
         coords: {
@@ -77,7 +76,7 @@ function Map(App, $auth, $state, $http, $rootScope, User, uiGmapGoogleMapApi, $t
         options: {
           animation: 1,
           draggable: true,
-          labelContent: this.firstName,
+          labelContent: this.first_name,
         },
         icon: {
           url: $ctrl.user.image,
@@ -93,7 +92,6 @@ function Map(App, $auth, $state, $http, $rootScope, User, uiGmapGoogleMapApi, $t
     });
 
     $ctrl.users.then(function() {
-      console.log("users in then = ", $ctrl.users);
       $ctrl.users.forEach(user => {
         $ctrl.markers.push({
           id: user.id,
@@ -137,8 +135,11 @@ function Map(App, $auth, $state, $http, $rootScope, User, uiGmapGoogleMapApi, $t
     let userUrl = url + 'profile?token=' + $auth.getToken();
     return $http.get(userUrl)
       .then(function(response) {
+        if (response.data.code !== 200 && response.data.status !== 'succcess') {
+          alert('Can not get User data!');
+          return;
+        }
         $ctrl.user = angular.fromJson(response.data.result);
-        console.log($ctrl.user);
       })
   }
 
@@ -149,9 +150,10 @@ function Map(App, $auth, $state, $http, $rootScope, User, uiGmapGoogleMapApi, $t
     let usersUrl = url + 'profile?token=' + $auth.getToken();
     angular.extend($ctrl.user, params);
     $http.post(usersUrl, $ctrl.user)
-      .then(function(result) {
-        if (result.status == 200) {} else {
-          alert('Can not save data!');
+      .then(function(response) {
+        if (response.data.code !== 200 && response.data.status !== 'succcess') {
+          alert('Can not update User location!');
+          return;
         }
       });
   }
@@ -160,9 +162,12 @@ function Map(App, $auth, $state, $http, $rootScope, User, uiGmapGoogleMapApi, $t
     let usersUrl = url + 'users?token=' + $auth.getToken();
     return $http.get(usersUrl)
       .then(function(response) {
-        console.log(response);
+        if (response.data.code !== 200 && response.data.status !== 'succcess') {
+          alert('Can not get Users data!');
+          return;
+        }
+        $ctrl.filterUsers = angular.fromJson(response.data.result);
         $ctrl.users = angular.fromJson(response.data.result);
-        console.log($ctrl.users);
       })
   }
 

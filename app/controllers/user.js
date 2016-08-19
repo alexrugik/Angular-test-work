@@ -11,7 +11,7 @@ function User(App, $auth, $state, $http, User) {
   function initPage() {
     checkAuth();
     $ctrl.currentUser = {};
-    getCurrentUser($state.params.userId);
+    getCurrentUserById($state.params.userId);
   }
 
   function checkAuth() {
@@ -26,10 +26,14 @@ function User(App, $auth, $state, $http, User) {
     }
   }
 
-  function getCurrentUser(id) {
+  function getCurrentUserById(id) {
     let localUrl = url + 'users/' +  $state.params.userId + '?token=' + $auth.getToken();
     return $http.get(localUrl)
       .then(function(response) {
+        if (response.data.code !== 200 && response.data.status !== 'succcess' ) {
+          alert('Can not get current User data!');
+          return;
+        }
         $ctrl.currentUser = angular.fromJson(response.data.result);
       })
   }

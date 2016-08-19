@@ -7,14 +7,16 @@
       <div class="col-md-3 col-lg-3 col-sm-6">
         <div class="text-center">
           <img ng-src="{{$ctrl.user.image}}" class="avatar img-circle img-responsive" alt="avatar">
-          <h6>Upload a different photo...</h6>
-          <input id="foto" type="file" class="form-control">
-          <button ng-click="$ctrl.getAvatar()">upload me</button>
+          <label class="btn btn-default btn-file">
+            <h6>Put a different photo...</h6>
+            <input id="foto" type="file" style="display: none;">
+          </label>
+          <button ng-click="$ctrl.getAvatar()" class="btn-primary">Upload foto</button>
         </div>
       </div>
 
       <!-- edit form column -->
-      <div class="col-md-9 col-lg-9 col-sm-6 personal-info">
+      <div class="col-md-6 col-lg-6 col-sm-6 personal-info">
 
         <div class="form-group">
             <h3 class="title">Personal info</h3>

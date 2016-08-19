@@ -4,7 +4,7 @@ Home.$inject = ['App', '$auth', '$state', '$http', 'Test', 'User'];
 
 function Home(App, $auth, $state, $http, Test, User) {
   var $ctrl = this;
-  let url = 'http://test-api.live.gbksoft.net/api/v1/profile?token=' + $auth.getToken();
+  const url = 'http://test-api.live.gbksoft.net/api/v1/';
 
   initPage();
 
@@ -15,23 +15,12 @@ function Home(App, $auth, $state, $http, Test, User) {
 
   $ctrl.getAvatar = function() {
     let file = document.getElementById('foto').files;
-    if (file[0] && !file[0].type === 'image/jpeg') {
-      alert('Is not correct avatar format! Please use image/jpeg');
+    if (file.length === 0 || file[0].type !== 'image/jpeg') {
+      alert('Is not correct avatar format or no image! Please use image/jpeg');
       return;
     }
     UpdateUserImage(file);
   }
-
-/*  function previewFile(file) { 
-    let reader  = new FileReader();
-    reader.addEventListener("load", function(e) {  
-      $ctrl.user.image = e.target.result;
-      UpdateUserImage()
-    }, false); 
-    if (file) {  
-      reader.readAsDataURL(file); 
-    }
-  }*/
 
   function initPage() {
     checkAuth();
@@ -53,39 +42,56 @@ function Home(App, $auth, $state, $http, Test, User) {
   }
 
   function getUser() {
-    $http.get(url)
+    let userUrl = url + 'profile?token=' + $auth.getToken();
+    $http.get(userUrl)
       .then(function(response) {
+        if (response.data.code !== 200 && response.data.status !== 'succcess' ) {
+          alert('Can not get User data!');
+          return;
+        }
         $ctrl.user = angular.fromJson(response.data.result);
-        console.log($ctrl.user);
       })
   }
 
   function updateUser() {
-    $http.post(url, $ctrl.user)
-      .then(function(result) {
-        if (result.status == 200) {} else {
-          alert('Can not save data!');
+    let userUrl = url + 'profile?token=' + $auth.getToken();
+    $http.post(userUrl, $ctrl.user)
+      .then(function(response) {
+        if (response.data.code !== 200 && response.data.status !== 'succcess' ) {
+          alert('Can not update User data!');
+          return;
         }
       })
   }
 
   function UpdateUserImage(files) {
+    let userUrl = url + 'profile?token=' + $auth.getToken();
     let fd = new FormData();
-    console.log(fd);
     fd.append("image", files[0]);
-    $http.post(url, fd, {
+    $http.post(userUrl, fd, {
         withCredentials: true,
         headers: {
           'Content-Type': undefined
         },
         transformRequest: angular.identity
       })
-      .then(function(result) {
-        if (result.status == 200) {} else {
-          alert('Can not save data!');
+      .then(function(response) {
+        if (response.data.code !== 200 && response.data.status !== 'succcess' ) {
+          alert('Can not save image data for User!');
+          return;
         }
       })
   }
 
+  let User = {
+    userUrl: url + 'profile?token=' + $auth.getToken(),
+
+    getUser: getUser,
+
+    updateUser: updateUser,
+
+    UpdateUserImage: UpdateUserImage,
+
+  }
 
 }
