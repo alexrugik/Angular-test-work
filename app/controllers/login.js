@@ -5,16 +5,7 @@ Login.$inject = ['$auth', '$state'];
 function Login($auth, $state) {
   var $ctrl = this;
 
-  if ($auth.isAuthenticated()) {
-    $state.go('home');
-  } else {
-    $ctrl.loginText = 'Login please';
-  }
-
-  $ctrl.credentials = {
-    email: '',
-    password: ''
-  };
+  initPage();
 
   $ctrl.authenticate = function() {
     $auth.authenticate('facebook').then(function(res) {
@@ -32,6 +23,22 @@ function Login($auth, $state) {
       $auth.facebook
     },
   };
+
+  function initPage() {
+    checkAuth();
+    $ctrl.credentials = {
+      email: '',
+      password: ''
+    };
+  }
+
+  function checkAuth() {
+    if (!$auth.isAuthenticated()) {
+      $ctrl.loginText = 'Login please';
+    } else {
+      $state.go('home');
+    }
+  }
 
   function authenticate(provider) {
     $auth.authenticate(provider)

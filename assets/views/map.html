@@ -61,24 +61,23 @@
     </div>
 </div>
 
-<ui-gmap-google-map center="$ctrl.map.center"
-                  zoom="$ctrl.map.zoom"
-                  options="$ctrl.map.options"
-                  refresh="$ctrl.map.refresh()">
-  <ui-gmap-marker ng-repeat="marker in $ctrl.markers"
-                  coords="marker.coords"
-                  idkey="marker.id"
-                  icon="marker.icon"
-                  click="marker.click"
-                  options="marker.options"></ui-gmap-marker>
-</ui-gmap-google-map>
 
 <div class="container">
     <div class="row">
         <uib-tabset active="activeJustified" justified="true">
-            <uib-tab index="0" heading="MAP view">
+            <uib-tab select="reRednerMap()" index="0"  heading="MAP view">
               <h3>Map</h3>
-
+              <ui-gmap-google-map ng-if="$ctrl.showMap" center="$ctrl.map.center"
+                                zoom="$ctrl.map.zoom"
+                                options="$ctrl.map.options"
+                                refresh="$ctrl.map.refresh()">
+                <ui-gmap-marker ng-repeat="marker in $ctrl.markers"
+                                coords="marker.coords"
+                                idkey="marker.id"
+                                icon="marker.icon"
+                                click="marker.click"
+                                options="marker.options"></ui-gmap-marker>
+              </ui-gmap-google-map>
             </uib-tab>
             <uib-tab index="1" heading="User view">
               <div style="margin-top: 15px"class="row">
@@ -93,7 +92,7 @@
                 </div>
               </div>
               <h3>List with users</h3>
-              <ul ng-repeat="user in $ctrl.filterUsers | filter: searchText">
+              <ul ng-repeat="user in $ctrl.users | filter: searchText">
                   <li class="col-md-4 col-lg-4 col-sm-6">
                       <a href="/map/{{user.id}}">{{user.first_name + user.last_name}}</a>
                       <p>email: {{user.email}}</p>

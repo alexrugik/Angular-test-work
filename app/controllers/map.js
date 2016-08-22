@@ -4,7 +4,7 @@ Map.$inject = ['App', '$auth', '$state', '$http', '$rootScope', 'User', 'uiGmapG
 
 function Map(App, $auth, $state, $http, $rootScope, User, uiGmapGoogleMapApi, $timeout) {
   var $ctrl = this;
-  const url = 'http://test-api.live.gbksoft.net/api/v1/';
+
   $ctrl.map = {
     center: {
       latitude: 50.4303885,
@@ -24,7 +24,7 @@ function Map(App, $auth, $state, $http, $rootScope, User, uiGmapGoogleMapApi, $t
       mapTypeI: 'roadmap',
       refresh: function() {
         return true;
-      }
+      },
     },
   };
 
@@ -35,11 +35,9 @@ function Map(App, $auth, $state, $http, $rootScope, User, uiGmapGoogleMapApi, $t
       navigator.geolocation.getCurrentPosition(function(position) {
         let coordinats = position.coords;
 
-        UpdateUser({
-          lat: coordinats.latitude.toString(),
-          lon: coordinats.longitude.toString()
-        });
-
+        $ctrl.user.lat = coordinats.latitude;
+        $ctrl.user.lon = coordinats.longitude;
+        $ctrl.user.$save();
         angular.extend($ctrl.currentUserMarker, {
           coords: {
             latitude: position.coords.latitude,
@@ -47,24 +45,27 @@ function Map(App, $auth, $state, $http, $rootScope, User, uiGmapGoogleMapApi, $t
           }
         });
 
-        $ctrl.map.center.latitude = coordinats.latitude;
-        $ctrl.map.center.longitude = coordinats.longitude;
+        $ctrl.map.center.latitude = coordinats.latitude + '';
+        $ctrl.map.center.longitude = coordinats.longitude + '';
         google.maps.event.trigger($ctrl.map, 'resize');
       });
     }
   });
 
   function initPage() {
+    $ctrl.showMap = false;
     checkAuth();
     $ctrl.user = App.user;
-    $ctrl.users = getUsers();
+    $ctrl.users = User.$search();
     $ctrl.markers = [];
     $ctrl.currentUserMarker = {};
     initMap();
+    $timeout(function() {
+      $ctrl.showMap = true;
+    }, 500);
   }
 
   function initMap(property) {
-    console.log('init map');
 
     if (property) {
       angular.extend($ctrl.map, property);
@@ -96,7 +97,7 @@ function Map(App, $auth, $state, $http, $rootScope, User, uiGmapGoogleMapApi, $t
       $ctrl.markers.push($ctrl.currentUserMarker);
     });
 
-    $ctrl.users.then(function() {
+    $ctrl.users.$then(function(resp) {
       $ctrl.users.forEach(user => {
         $ctrl.markers.push({
           id: user.id,
@@ -134,31 +135,6 @@ function Map(App, $auth, $state, $http, $rootScope, User, uiGmapGoogleMapApi, $t
         return $auth.logout().then(function() {})
       }
     }
-  }
-
-  function getUser() {
-    $ctrl.user = App.user;
-  }
-
-  function UpdateUser(params) {
-    if (!params) {
-      return;
-    }
-
-    $ctrl.user.$save();
-  }
-
-  function getUsers() {
-    let usersUrl = url + 'users?token=' + $auth.getToken();
-    return $http.get(usersUrl)
-      .then(function(response) {
-        if (response.data.code !== 200 && response.data.status !== 'succcess') {
-          alert('Can not get Users data!');
-          return;
-        }
-        $ctrl.filterUsers = angular.fromJson(response.data.result);
-        $ctrl.users = angular.fromJson(response.data.result);
-      })
   }
 
   function handleClickForUser() {

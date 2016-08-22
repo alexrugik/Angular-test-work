@@ -4,13 +4,14 @@ Home.$inject = ['App', '$auth', '$state', '$http', 'Test', 'User'];
 
 function Home(App, $auth, $state, $http, Test, User) {
   var $ctrl = this;
-  const url = 'http://test-api.live.gbksoft.net/api/v1/';
+  $ctrl.user = App.user;
 
   initPage();
 
   $ctrl.saveChanges = function() {
-    updateUser();
-    $state.go('map');
+    $ctrl.user.$save().$then(function() {
+      $state.go('map');
+    });
   }
 
   $ctrl.getAvatar = function() {
@@ -24,10 +25,7 @@ function Home(App, $auth, $state, $http, Test, User) {
 
   function initPage() {
     checkAuth();
-    $ctrl.user = {};
-    getUser();
   }
-
 
   function checkAuth() {
     if (!$auth.isAuthenticated()) {
@@ -41,30 +39,8 @@ function Home(App, $auth, $state, $http, Test, User) {
     }
   }
 
-  function getUser() {
-    let userUrl = url + 'profile?token=' + $auth.getToken();
-    $http.get(userUrl)
-      .then(function(response) {
-        if (response.data.code !== 200 && response.data.status !== 'succcess' ) {
-          alert('Can not get User data!');
-          return;
-        }
-        $ctrl.user = angular.fromJson(response.data.result);
-      })
-  }
-
-  function updateUser() {
-    let userUrl = url + 'profile?token=' + $auth.getToken();
-    $http.post(userUrl, $ctrl.user)
-      .then(function(response) {
-        if (response.data.code !== 200 && response.data.status !== 'succcess' ) {
-          alert('Can not update User data!');
-          return;
-        }
-      })
-  }
-
   function updateUserImage(files) {
+    const url = 'http://test-api.live.gbksoft.net/api/v1/';
     let userUrl = url + 'profile?token=' + $auth.getToken();
     let fd = new FormData();
     fd.append("image", files[0]);
@@ -76,7 +52,7 @@ function Home(App, $auth, $state, $http, Test, User) {
         transformRequest: angular.identity
       })
       .then(function(response) {
-        if (response.data.code !== 200 && response.data.status !== 'succcess' ) {
+        if (response.data.code !== 200 && response.data.status !== 'succcess') {
           alert('Can not save image data for User!');
           return;
         }
