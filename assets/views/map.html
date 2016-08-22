@@ -61,22 +61,24 @@
     </div>
 </div>
 
+<ui-gmap-google-map center="$ctrl.map.center"
+                  zoom="$ctrl.map.zoom"
+                  options="$ctrl.map.options"
+                  refresh="$ctrl.map.refresh()">
+  <ui-gmap-marker ng-repeat="marker in $ctrl.markers"
+                  coords="marker.coords"
+                  idkey="marker.id"
+                  icon="marker.icon"
+                  click="marker.click"
+                  options="marker.options"></ui-gmap-marker>
+</ui-gmap-google-map>
+
 <div class="container">
     <div class="row">
         <uib-tabset active="activeJustified" justified="true">
             <uib-tab index="0" heading="MAP view">
               <h3>Map</h3>
-              <ui-gmap-google-map center="$ctrl.map.center"
-                                zoom="$ctrl.map.zoom"
-                                options="$ctrl.map.options"
-                                refresh="$ctrl.map.refresh">
-                <ui-gmap-marker ng-repeat="marker in $ctrl.markers"
-                                coords="marker.coords"
-                                idkey="marker.id"
-                                icon="marker.icon"
-                                click="marker.click"
-                                options="marker.options"></ui-gmap-marker>
-              </ui-gmap-google-map>
+
             </uib-tab>
             <uib-tab index="1" heading="User view">
               <div style="margin-top: 15px"class="row">

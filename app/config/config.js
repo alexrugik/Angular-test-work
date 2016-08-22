@@ -29,4 +29,22 @@ function config(AppProvider, $locationProvider, $authProvider, restmodProvider, 
     //v: '3.20', //defaults to latest 3.X anyhow
     libraries: 'weather,geometry,visualization'
   });
+
+  restmodProvider
+   .rebase('DefaultPacker', 'Base', {
+     $extend: {
+       Model: {
+         encodeUrlName: function (_name) {
+           return _name.toLowerCase();
+         }
+       }
+     },
+     $config: {
+       style: 'GBKSOFT',
+       urlPrefix: AppProvider.config.apiUrl,
+       jsonRoot: 'result',
+       primaryKey: 'id',
+       jsonMeta: '_meta'
+     }
+   });
 }

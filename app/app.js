@@ -36,7 +36,7 @@ function AppProvider() {
       user: {
         get: function () {
           if (!user && $auth.isAuthenticated()) {
-            user = User.single('users/current').$fetch();
+            user = User.single('profile').$fetch();
           }
 
           return user;

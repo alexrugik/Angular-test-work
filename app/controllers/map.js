@@ -5,6 +5,28 @@ Map.$inject = ['App', '$auth', '$state', '$http', '$rootScope', 'User', 'uiGmapG
 function Map(App, $auth, $state, $http, $rootScope, User, uiGmapGoogleMapApi, $timeout) {
   var $ctrl = this;
   const url = 'http://test-api.live.gbksoft.net/api/v1/';
+  $ctrl.map = {
+    center: {
+      latitude: 50.4303885,
+      longitude: 30.5046767
+    },
+    zoom: 11,
+    bounds: {},
+    options: {
+      zoomControl: false,
+      minZoom: 4,
+      maxZoom: 25,
+      mapTypeControl: false,
+      streetViewControl: false,
+      draggable: true,
+      panControl: false,
+      optimized: true,
+      mapTypeI: 'roadmap',
+      refresh: function() {
+        return true;
+      }
+    },
+  };
 
   initPage();
 
@@ -34,7 +56,7 @@ function Map(App, $auth, $state, $http, $rootScope, User, uiGmapGoogleMapApi, $t
 
   function initPage() {
     checkAuth();
-    $ctrl.user = getUser();
+    $ctrl.user = App.user;
     $ctrl.users = getUsers();
     $ctrl.markers = [];
     $ctrl.currentUserMarker = {};
@@ -42,32 +64,13 @@ function Map(App, $auth, $state, $http, $rootScope, User, uiGmapGoogleMapApi, $t
   }
 
   function initMap(property) {
-    $ctrl.map = {
-      center: {
-        latitude: 50.4303885,
-        longitude: 30.5046767
-      },
-      zoom: 11,
-      bounds: {},
-      options: {
-        zoomControl: false,
-        minZoom: 4,
-        maxZoom: 25,
-        mapTypeControl: false,
-        streetViewControl: false,
-        draggable: true,
-        panControl: false,
-        optimized: true,
-        mapTypeI: 'roadmap',
-        refresh: true
-      },
-    };
+    console.log('init map');
 
     if (property) {
       angular.extend($ctrl.map, property);
     }
 
-    $ctrl.user.then(function() {
+    $ctrl.user.$then(function() {
       angular.extend($ctrl.currentUserMarker, {
         id: $ctrl.user.id,
         coords: {
@@ -134,30 +137,15 @@ function Map(App, $auth, $state, $http, $rootScope, User, uiGmapGoogleMapApi, $t
   }
 
   function getUser() {
-    let userUrl = url + 'profile?token=' + $auth.getToken();
-    return $http.get(userUrl)
-      .then(function(response) {
-        if (response.data.code !== 200 && response.data.status !== 'succcess') {
-          alert('Can not get User data!');
-          return;
-        }
-        $ctrl.user = angular.fromJson(response.data.result);
-      })
+    $ctrl.user = App.user;
   }
 
   function UpdateUser(params) {
     if (!params) {
       return;
     }
-    let usersUrl = url + 'profile?token=' + $auth.getToken();
-    angular.extend($ctrl.user, params);
-    $http.post(usersUrl, $ctrl.user)
-      .then(function(response) {
-        if (response.data.code !== 200 && response.data.status !== 'succcess') {
-          alert('Can not update User location!');
-          return;
-        }
-      });
+
+    $ctrl.user.$save();
   }
 
   function getUsers() {
