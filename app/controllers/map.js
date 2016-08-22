@@ -27,6 +27,7 @@ function Map(App, $auth, $state, $http, $rootScope, User, uiGmapGoogleMapApi, $t
 
         $ctrl.map.center.latitude = coordinats.latitude;
         $ctrl.map.center.longitude = coordinats.longitude;
+        google.maps.event.trigger($ctrl.map, 'resize');
       });
     }
   });
@@ -58,6 +59,7 @@ function Map(App, $auth, $state, $http, $rootScope, User, uiGmapGoogleMapApi, $t
         panControl: false,
         optimized: true,
         mapTypeI: 'roadmap',
+        refresh: true
       },
     };
 

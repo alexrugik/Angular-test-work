@@ -12,9 +12,6 @@
         margin-right: auto;
     }
 
-    .gmnoprint img{
-        border-radius: 50%;
-    }
     .angular-google-map-container {
        height: 400px;
      }
@@ -71,7 +68,8 @@
               <h3>Map</h3>
               <ui-gmap-google-map center="$ctrl.map.center"
                                 zoom="$ctrl.map.zoom"
-                                options="$ctrl.map.options">
+                                options="$ctrl.map.options"
+                                refresh="$ctrl.map.refresh">
                 <ui-gmap-marker ng-repeat="marker in $ctrl.markers"
                                 coords="marker.coords"
                                 idkey="marker.id"
@@ -81,8 +79,16 @@
               </ui-gmap-google-map>
             </uib-tab>
             <uib-tab index="1" heading="User view">
-              <div class="">
-                <label style="margin-top:10px">Find some friends: <input ng-model="searchText"></label>
+              <div style="margin-top: 15px"class="row">
+                <div class="col-md-4">
+                    <form action="" class="search-form">
+                        <div class="form-group has-feedback">
+                            <label for="search" class="sr-only">>Find some friends:</label>
+                            <input type="text" class="form-control" name="search" id="search" ng-model="searchText" placeholder="search friends">
+                            <span class="glyphicon glyphicon-search form-control-feedback"></span>
+                        </div>
+                    </form>
+                </div>
               </div>
               <h3>List with users</h3>
               <ul ng-repeat="user in $ctrl.filterUsers | filter: searchText">
